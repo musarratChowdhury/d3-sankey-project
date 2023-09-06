@@ -1,0 +1,50 @@
+[
+  {
+    "name": "United States",
+    "capital": "Washington, D.C.",
+    "population": 331002651,
+    "continent": "North America"
+  },
+  {
+    "name": "Canada",
+    "capital": "Ottawa",
+    "population": 37742154,
+    "continent": "North America"
+  },
+  {
+    "name": "United Kingdom",
+    "capital": "London",
+    "population": 67886011,
+    "continent": "Europe"
+  },
+  {
+    "name": "Germany",
+    "capital": "Berlin",
+    "population": 83783942,
+    "continent": "Europe"
+  },
+  {
+    "name": "France",
+    "capital": "Paris",
+    "population": 65273511,
+    "continent": "Europe"
+  },
+  {
+    "name": "China",
+    "capital": "Beijing",
+    "population": 1439323776,
+    "continent": "Asia"
+  },
+  {
+    "name": "Japan",
+    "capital": "Tokyo",
+    "population": 126476461,
+    "continent": "Asia"
+  },
+  {
+    "name": "Australia",
+    "capital": "Canberra",
+    "population": 25499884,
+    "continent": "Australia"
+  }
+]

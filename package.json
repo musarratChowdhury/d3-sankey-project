@@ -1,0 +1,45 @@
+{
+  "name": "typescrip_webpack_enabled_boilerplate",
+  "version": "1.0.0",
+  "description": "it is a template folder for any kind of typescript + webpack development",
+  "main": "webpack.config.js",
+  "scripts": {
+    "start": "webpack serve --config webpack.config.js --mode development",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/musarratChowdhury/Canvas_game_template.git"
+  },
+  "author": "MusarratChowdhury",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/musarratChowdhury/Canvas_game_template/issues"
+  },
+  "homepage": "https://github.com/musarratChowdhury/Canvas_game_template#readme",
+  "devDependencies": {
+    "@syncfusion/ej2": "^22.2.8",
+    "@syncfusion/ej2-base": "^22.2.5",
+    "@types/d3": "^7.4.0",
+    "@types/d3-sankey": "^0.12.1",
+    "@types/datatables.net": "^1.10.24",
+    "@types/fabric": "^5.3.3",
+    "@types/jquery": "^3.5.16",
+    "@types/jquery.validation": "^1.16.7",
+    "ts-loader": "^9.4.4",
+    "typescript": "^5.1.6",
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1"
+  },
+  "dependencies": {
+    "@syncfusion/ej2-grids": "^22.2.8",
+    "d3": "^7.8.5",
+    "d3-sankey": "^0.12.3",
+    "datatables": "^1.10.18",
+    "datatables.net": "^1.13.6",
+    "jquery": "^3.7.0",
+    "jquery-validate": "^2.0.0"
+  }
+}
