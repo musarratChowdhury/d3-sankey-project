@@ -21,9 +21,7 @@ out/
 *.log
 *.bak
 
-# Compiled TypeScript
-*.js
-*.js.map
+
 
 # Environment variables
 .env
