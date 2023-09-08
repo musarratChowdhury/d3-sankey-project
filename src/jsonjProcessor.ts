@@ -24,7 +24,7 @@ export default function processJSON(data: any) {
       for (const innerKey in data[key]) {
         if (innerKey !== "total") {
           addNode(innerKey);
-          console.log(innerKey == "value" ? data[key].value : 0);
+          // console.log(innerKey == "value" ? data[key].value : 0);
           addLink(key, innerKey, innerKey == "value" ? data[key].value : 0);
           if (typeof data[key][innerKey] === "object") {
             processJSON(data[key][innerKey]);
