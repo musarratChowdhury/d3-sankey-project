@@ -1,166 +1,21 @@
 import * as d3 from "d3";
 import { sankey, sankeyLinkHorizontal } from "d3-sankey";
 import processJSON from "./jsonjProcessor";
+import JSONProcess, {
+  SankeyData,
+  SankeyLink,
+  SankeyNode,
+} from "./jsonProcessor";
 const color = d3.scaleOrdinal(d3.schemeCategory10);
 const format = d3.format(",.0f");
-//@ts-ignore
-const testData = {
-  Revenues: {
-    total: {
-      value: 50100000000,
-      valueText: "$50.1B",
-      change: "+11% Y/Y",
-    },
-    products: [
-      {
-        pro1: "Microsoft 365, Linked in",
-        value: 16500000000,
-        valueText: "$16.5B",
-        change: "+9% Y/Y",
-      },
-      {
-        pro2: "Intelligent Cloud",
-        value: 20300000000,
-        valueText: "$20.3B",
-        change: "+20% Y/Y",
-      },
-      {
-        pro3: "Intelligent Cloud",
-        value: 13300000000,
-        valueText: "$13.3B",
-        change: "Flat Y/Y",
-      },
-    ],
-  },
-  GrossProfit: {
-    total: {
-      value: 34700000000,
-      valueText: "$34.7B",
-      change: "(1pp) Y/Y",
-      margin: "69% margin",
-    },
-    OperatingProfit: {
-      total: {
-        value: 21500000000,
-        valueText: "$21.5B",
-        change: "(2pp) Y/Y",
-        margin: "43% margin",
-      },
-      NetProfit: {
-        total: {
-          value: 17600000000,
-          valueText: "$17.6B",
-          change: "(10pp) Y/Y",
-          margin: "35% margin",
-        },
-        OtherProfit: {
-          value: 54000000,
-          valueText: "$54M",
-        },
-      },
-      Tax: {
-        value: 4000000000,
-        valueText: "($4.0B)",
-      },
-    },
-    OperatingExpenses: {
-      total: {
-        value: 13200000000,
-        valueText: "($13.2B)",
-      },
-      expenses: [
-        {
-          exp1: "R&D",
-          value: 6600000000,
-          valueText: "($6.6B)",
-        },
-        {
-          exp2: "S&M",
-          value: 5100000000,
-          valueText: "($5.1B)",
-        },
-        {
-          exp3: "G&A",
-          value: 1400000000,
-          valueText: "($1.4B)",
-        },
-      ],
-    },
-  },
-  CostOfRevenue: {
-    value: 15500000000,
-    valueText: "($15.5B)",
-    change: "",
-  },
-};
-console.log(testData);
 const jsonData = require("../data/Revenue.json");
 console.log(jsonData);
 
-// const sampledata = {
-//   nodes: [
-//     { id: "Revenues", color: color("Revenues") },
-//     {
-//       id: "Products (Microsoft 365, Linked in)",
-//       color: color("Products (Microsoft 365, Linked in)"),
-//     },
-//     {
-//       id: "Products (Intelligent Cloud)",
-//       color: color("Products (Intelligent Cloud)"),
-//     },
-//     { id: "Gross Profit", color: color("Gross Profit") },
-//     { id: "Operating Profit", color: color("Operating Profit") },
-//     { id: "Net Profit", color: color("Net Profit") },
-//     { id: "Other Profit", color: color("Other Profit") },
-//     { id: "Tax", color: color("Tax") },
-//     { id: "Operating Expenses", color: color("Operating Expenses") },
-//     { id: "R&D", color: color("R&D") },
-//     { id: "S&M", color: color("S&M") },
-//     { id: "G&A", color: color("G&A") },
-//     { id: "Cost of Revenue", color: color("Cost of Revenue") },
-//   ],
-//   links: [
-//     {
-//       source: "Revenues",
-//       target: "Products (Microsoft 365, Linked in)",
-//       value: 16500000000,
-//     },
-//     {
-//       source: "Revenues",
-//       target: "Products (Intelligent Cloud)",
-//       value: 20300000000,
-//     },
-//     {
-//       source: "Revenues",
-//       target: "Products (Intelligent Cloud)",
-//       value: 13300000000,
-//     },
-//     { source: "Revenues", target: "Gross Profit", value: 34700000000 },
-//     { source: "Gross Profit", target: "Operating Profit", value: 21500000000 },
-//     {
-//       source: "Gross Profit",
-//       target: "Operating Expenses",
-//       value: 13200000000,
-//     },
-//     { source: "Operating Profit", target: "Net Profit", value: 17600000000 },
-//     { source: "Operating Profit", target: "Other Profit", value: 54000000 },
-//     { source: "Operating Profit", target: "Tax", value: 4000000000 },
-//     { source: "Operating Expenses", target: "R&D", value: 6600000000 },
-//     { source: "Operating Expenses", target: "S&M", value: 5100000000 },
-//     { source: "Operating Expenses", target: "G&A", value: 1400000000 },
-//     { source: "Gross Profit", target: "Cost of Revenue", value: 15500000000 },
-//     { source: "Cost of Revenue", target: "expenses", value: 15500000000 },
-//     { source: "expenses", target: "exp1", value: 6600000000 },
-//     { source: "expenses", target: "exp2", value: 5100000000 },
-//     { source: "expenses", target: "exp3", value: 1400000000 },
-//   ],
-// };
 // Start processing the JSON data
-let processedData = processJSON(jsonData);
+let processedData = JSONProcess(jsonData);
 
 // Log the nodes and links arrays
-console.log("Nodes:", processedData.nodes);
-console.log("Links:", processedData.links);
+console.log("processedData", processedData);
 //#region Globals
 const width = 1000;
 const height = 600;
@@ -169,24 +24,9 @@ const height = 600;
 const container = d3.select("#sankey-container");
 // Defines a color scale.
 // Define types for your JSON data
-interface SankeyNode {
-  id: string;
-  color: string;
-}
-
-interface SankeyLink {
-  source: string;
-  target: string;
-  value: number;
-}
-
-interface SankeyData {
-  nodes: SankeyNode[];
-  links: SankeyLink[];
-}
 
 // Parse your JSON data (replace this with your actual data)
-const sankeyData: SankeyData = jsonData;
+const sankeyData: SankeyData = processedData;
 sankeyData.nodes.forEach((node, index) => {
   node.color = color(index.toString());
 });
@@ -201,7 +41,7 @@ const sankeyLayout = sankey<SankeyData, SankeyNode, SankeyLink>()
     [width - 1, height - 5],
   ]);
 
-const { nodes, links } = sankeyLayout(jsonData);
+const { nodes, links } = sankeyLayout(processedData);
 // const { nodes, links } = processedData;
 
 // Create an SVG element to contain the Sankey graph
