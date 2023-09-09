@@ -1,5 +1,12 @@
 import * as d3 from "d3";
-import { sankey, sankeyLinkHorizontal } from "d3-sankey";
+import {
+  sankey,
+  sankeyCenter,
+  sankeyJustify,
+  sankeyLeft,
+  sankeyLinkHorizontal,
+  sankeyRight,
+} from "d3-sankey";
 import processJSON from "./jsonjProcessor";
 import JSONProcess, {
   SankeyData,
@@ -18,7 +25,7 @@ let processedData = JSONProcess(jsonData);
 console.log("processedData", processedData);
 //#region Globals
 const width = 1000;
-const height = 600;
+const height = 700;
 //#endregion
 // Select the HTML container where you want to render the Sankey graph
 const container = d3.select("#sankey-container");
@@ -34,8 +41,9 @@ sankeyData.nodes.forEach((node, index) => {
 // Create a D3-sankey layout
 const sankeyLayout = sankey<SankeyData, SankeyNode, SankeyLink>()
   .nodeId((d) => d.id)
-  .nodeWidth(40)
+  .nodeWidth(50)
   .nodePadding(30)
+  .nodeAlign(sankeyJustify)
   .extent([
     [1, 1],
     [width - 1, height - 5],

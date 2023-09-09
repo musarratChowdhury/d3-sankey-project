@@ -111,5 +111,6 @@ export default function JSONProcess(data: any): SankeyData {
   }
   //#endregion
   JSONProcessor(data);
+  console.log("links", links);
   return { nodes, links };
 }
