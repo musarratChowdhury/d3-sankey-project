@@ -24,66 +24,66 @@
         "valueText": "$13.3B",
         "change": "Flat Y/Y"
       }
-    ]
-  },
-  "Gross Profit": {
-    "total": {
-      "value": 34700000000,
-      "valueText": "$34.7B",
-      "change": "(1pp) Y/Y",
-      "margin": "69% margin"
-    },
-    "Operating Profit": {
+    ],
+    "Gross Profit": {
       "total": {
-        "value": 21500000000,
-        "valueText": "$21.5B",
-        "change": "(2pp) Y/Y",
-        "margin": "43% margin"
+        "value": 34700000000,
+        "valueText": "$34.7B",
+        "change": "(1pp) Y/Y",
+        "margin": "69% margin"
       },
-      "Net Profit": {
+      "Operating Profit": {
         "total": {
-          "value": 17600000000,
-          "valueText": "$17.6B",
-          "change": "(10pp) Y/Y",
-          "margin": "35% margin"
+          "value": 21500000000,
+          "valueText": "$21.5B",
+          "change": "(2pp) Y/Y",
+          "margin": "43% margin"
         },
-        "Other Profit": {
-          "value": 54000000,
-          "valueText": "$54M"
+        "Net Profit": {
+          "total": {
+            "value": 17600000000,
+            "valueText": "$17.6B",
+            "change": "(10pp) Y/Y",
+            "margin": "35% margin"
+          },
+          "Other Profit": {
+            "value": 54000000,
+            "valueText": "$54M"
+          }
+        },
+        "Tax": {
+          "value": 4000000000,
+          "valueText": "($4.0B)"
         }
       },
-      "Tax": {
-        "value": 4000000000,
-        "valueText": "($4.0B)"
+      "Operating Expenses": {
+        "total": {
+          "value": 13200000000,
+          "valueText": "($13.2B)"
+        },
+        "expenses": [
+          {
+            "exp1": "R&D",
+            "value": 6600000000,
+            "valueText": "($6.6B)"
+          },
+          {
+            "exp2": "S&M",
+            "value": 5100000000,
+            "valueText": "($5.1B)"
+          },
+          {
+            "exp3": "G&A",
+            "value": 1400000000,
+            "valueText": "($1.4B)"
+          }
+        ]
       }
     },
-    "Operating Expenses": {
-      "total": {
-        "value": 13200000000,
-        "valueText": "($13.2B)"
-      },
-      "expenses": [
-        {
-          "exp1": "R&D",
-          "value": 6600000000,
-          "valueText": "($6.6B)"
-        },
-        {
-          "exp2": "S&M",
-          "value": 5100000000,
-          "valueText": "($5.1B)"
-        },
-        {
-          "exp3": "G&A",
-          "value": 1400000000,
-          "valueText": "($1.4B)"
-        }
-      ]
+    "Cost of Revenue": {
+      "value": 15500000000,
+      "valueText": "($15.5B)",
+      "change": ""
     }
-  },
-  "Cost of Revenue": {
-    "value": 15500000000,
-    "valueText": "($15.5B)",
-    "change": ""
   }
 }
