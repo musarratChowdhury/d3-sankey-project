@@ -22,36 +22,62 @@ class MyLink {
 
 const nodes: any[] = [];
 const links: any[] = [];
-function JSONProcessor(temp: any) {
+//#region function body
+function JSONProcessor(temp: any, parentKey?: any) {
   Object.keys(temp).forEach((key) => {
+    // if (parentKey) {
+    //   console.log("-----temp--all---", parentKey, key);
+    // }
     if (typeof temp[key] == "object" && key !== "total") {
-      console.log(typeof temp[key]);
+      // console.log(typeof temp[key]);
       if (temp[key].hasOwnProperty("value")) {
+        if (parentKey) {
+          console.log("-----parentkey, key-----", parentKey, key);
+          links.push(new MyLink(parentKey, key, temp[key].value));
+        }
         nodes.push(new MyNode(key, temp[key].value, temp[key].valueText));
-        JSONProcessor(temp[key]);
+        JSONProcessor(temp[key], key);
       }
       if (temp[key].hasOwnProperty("total")) {
+        if (parentKey) {
+          console.log("-----parentkey, key-----", parentKey, key);
+          links.push(new MyLink(parentKey, key, temp[key].total.value));
+        }
         nodes.push(
           new MyNode(key, temp[key].total.value, temp[key].total.valueText)
         );
-        JSONProcessor(temp[key]);
+        JSONProcessor(temp[key], key);
       }
     } else {
-      //   if (typeof temp == "object") {
-      //     console.log("others", temp);
-      //   }
+      // if (typeof temp == "object") {
+      //   // console.log("others", temp);
+      //   console.log("-----temp--else---", parentKey, key);
+      // }
     }
     if (Array.isArray(temp[key])) {
-      console.log("found an arry", temp);
+      // console.log("found an arry", temp);
       temp[key].forEach((element: any) => {
         if (Array.isArray(element)) {
-          JSONProcessor(element);
+          JSONProcessor(element, key);
         } else {
-          console.log(element);
-
           // JSONProcessor(element);
           if (element.hasOwnProperty("value")) {
             let properties = Object.getOwnPropertyNames(element);
+            if (parentKey) {
+              console.log(
+                "-----temp-from array section----",
+                element[properties[0]],
+                parentKey
+              );
+              links.push(
+                new MyLink(
+                  element[properties[0]],
+                  parentKey,
+                  element[properties[1]]
+                )
+              );
+            }
+
             nodes.push(
               new MyNode(
                 element[properties[0]],
@@ -64,7 +90,8 @@ function JSONProcessor(temp: any) {
       });
     }
   });
-  console.log(nodes);
 }
-
+//#endregion
 JSONProcessor(testData);
+// console.log(nodes);
+console.log(links);
