@@ -88,36 +88,36 @@ const link = svg
   .style("mix-blend-mode", "multiply");
 
 // Creates a gradient, if necessary, for the source-target color option.
-
-// const gradient = link
-//   .append("linearGradient")
-//   //@ts-ignore
-//   .attr("id", (d) => (d.uid = Math.random()))
-//   .attr("gradientUnits", "userSpaceOnUse")
-//   //@ts-ignore
-//   .attr("x1", (d) => d.source.x1)
-//   //@ts-ignore
-//   .attr("x2", (d) => d.target.x0);
-// gradient
-//   .append("stop")
-//   .attr("offset", "0%")
-//   .attr("stop-color", (d) => {
-//     // console.log(d);
-//     //@ts-ignore
-//     return color(d.source.category);
-//   });
-// gradient
-//   .append("stop")
-//   .attr("offset", "100%")
-//   //@ts-ignore
-//   .attr("stop-color", (d) => color(d.target.category));
-// console.log("Grad", gradient);
+const uid = `O-${Math.random().toString(16).slice(2)}`;
+const gradient = link
+  .append("linearGradient")
+  //@ts-ignore
+  .attr("id", (d) => `${uid}-link-${d.index}`)
+  .attr("gradientUnits", "userSpaceOnUse")
+  //@ts-ignore
+  .attr("x1", (d) => d.source.x1)
+  //@ts-ignore
+  .attr("x2", (d) => d.target.x0);
+gradient
+  .append("stop")
+  .attr("offset", "0%")
+  .attr("stop-color", (d) => {
+    // console.log(d);
+    //@ts-ignore
+    return color(d.source.category);
+  });
+gradient
+  .append("stop")
+  .attr("offset", "100%")
+  //@ts-ignore
+  .attr("stop-color", (d) => color(d.target.category));
+console.log("Grad", gradient);
 
 link
   .append("path")
   .attr("d", sankeyLinkHorizontal())
   //@ts-ignore
-  .attr("stroke", (d) => color(d.source.category))
+  .attr("stroke", (d, i) => `url(#${uid}-link-${i})`)
   .attr("stroke-width", (d) => Math.max(1, d.width!));
 
 link
