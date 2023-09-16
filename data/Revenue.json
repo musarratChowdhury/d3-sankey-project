@@ -10,19 +10,22 @@
         "pro1": "Microsoft 365, Linked in",
         "value": 16500000000,
         "valueText": "$16.5B",
-        "change": "+9% Y/Y"
+        "change": "+9% Y/Y",
+        "dir": "rev"
       },
       {
         "pro2": "Intelligent Cloud",
         "value": 20300000000,
         "valueText": "$20.3B",
-        "change": "+20% Y/Y"
+        "change": "+20% Y/Y",
+        "dir": "rev"
       },
       {
         "pro3": "More Personal Computing",
         "value": 13300000000,
         "valueText": "$13.3B",
-        "change": "Flat Y/Y"
+        "change": "Flat Y/Y",
+        "dir": "rev"
       }
     ],
     "Gross Profit": {
@@ -48,7 +51,8 @@
           },
           "Other Profit": {
             "value": 54000000,
-            "valueText": "$54M"
+            "valueText": "$54M",
+            "dir": "rev"
           }
         },
         "Tax": {

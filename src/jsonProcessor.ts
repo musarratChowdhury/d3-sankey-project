@@ -4,6 +4,9 @@ export interface SankeyNode {
   value: number;
   valueText: string;
   color: string;
+  x0: number;
+  x1: number;
+  category: string;
 }
 
 export interface SankeyLink {
@@ -26,6 +29,9 @@ class MyNode {
   value = 0;
   valueText = "";
   color = "";
+  x1 = 0;
+  x0 = 0;
+  category = "";
 }
 class MyLink {
   constructor(source: string, target: string, value: number) {
@@ -51,7 +57,11 @@ export default function JSONProcess(data: any): SankeyData {
         if (temp[key].hasOwnProperty("value")) {
           if (parentKey) {
             console.log("-----parentkey, key-----", parentKey, key);
-            links.push(new MyLink(parentKey, key, temp[key].value));
+            if (temp[key].hasOwnProperty("dir")) {
+              links.push(new MyLink(key, parentKey, temp[key].value));
+            } else {
+              links.push(new MyLink(parentKey, key, temp[key].value));
+            }
           }
           nodes.push(new MyNode(key, temp[key].value, temp[key].valueText));
           JSONProcessor(temp[key], key);
@@ -59,7 +69,11 @@ export default function JSONProcess(data: any): SankeyData {
         if (temp[key].hasOwnProperty("total")) {
           if (parentKey) {
             console.log("-----parentkey, key-----", parentKey, key);
-            links.push(new MyLink(parentKey, key, temp[key].total.value));
+            if (temp[key].hasOwnProperty("dir")) {
+              links.push(new MyLink(key, parentKey, temp[key].total.value));
+            } else {
+              links.push(new MyLink(parentKey, key, temp[key].total.value));
+            }
           }
           nodes.push(
             new MyNode(key, temp[key].total.value, temp[key].total.valueText)
@@ -87,13 +101,24 @@ export default function JSONProcess(data: any): SankeyData {
                   element[properties[0]],
                   parentKey
                 );
-                links.push(
-                  new MyLink(
-                    parentKey,
-                    element[properties[0]],
-                    element[properties[1]]
-                  )
-                );
+                if (element.hasOwnProperty("dir") && element["dir"] == "rev") {
+                  console.log(element);
+                  links.push(
+                    new MyLink(
+                      element[properties[0]],
+                      parentKey,
+                      element[properties[1]]
+                    )
+                  );
+                } else {
+                  links.push(
+                    new MyLink(
+                      parentKey,
+                      element[properties[0]],
+                      element[properties[1]]
+                    )
+                  );
+                }
               }
 
               nodes.push(
@@ -112,5 +137,10 @@ export default function JSONProcess(data: any): SankeyData {
   //#endregion
   JSONProcessor(data);
   console.log("links", links);
+  nodes.map((node) => {
+    node.category = node.id.replace(/ .*/, "");
+  });
+  console.log("nodes", nodes);
+
   return { nodes, links };
 }
