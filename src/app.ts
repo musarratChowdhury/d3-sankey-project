@@ -28,6 +28,12 @@ const format = d3.format(",.0f");
 //#endregion
 // Select the HTML container where you want to render the Sankey graph
 const container = d3.select("#sankey-container");
+const sankeyContainer = document.querySelector(".sankey-container");
+const title = document.createElement("h2");
+title.classList.add("title-text");
+title.innerText = "Microsoft Q1 FY23 income statement";
+sankeyContainer?.appendChild(title);
+
 // Defines a color scale.
 // Define types for your JSON data
 
@@ -56,8 +62,9 @@ const svg = container
   .append("svg")
   .attr("width", "100%")
   .attr("height", height)
-  .attr("viewBox", [0, -20, width, height + 30])
+  .attr("viewBox", [0, 0, width, height + 40])
   .attr("style", "max-width: 100%; height: auto; font: 15px sans-serif;");
+
 // Create nodes
 const node = svg
   .append("g")
@@ -161,3 +168,37 @@ svg
   .style("font-family", "Roboto, sans-serif") // Set font family
   .attr("fill", (d) => color(d.category))
   .text((d) => `${d.valueText}`);
+
+svg
+  .append("g")
+  .selectAll()
+  .data(nodes)
+  .join("text")
+  .attr("x", (d) => (d.x0! < width / 2 ? d.x1! + 6 : d.x0! - 6))
+  .attr("y", (d) => (d.y1! + d.y0!) / 2)
+  // .attr("y", (d) => d.y0! - 10)
+  .attr("dy", "2em")
+  .attr("text-anchor", (d) => (d.x0! < width / 2 ? "start" : "end"))
+  .style("mix-blend-mode", "multiply")
+  .style("font-size", "14px") // Set font size to 16 pixels
+  .style("font-weight", "400")
+  .style("font-family", "Roboto, sans-serif") // Set font family
+  .attr("fill", (d) => color(d.category))
+  .text((d) => `${d.change}`);
+
+svg
+  .append("g")
+  .selectAll()
+  .data(nodes)
+  .join("text")
+  .attr("x", (d) => (d.x0! < width / 2 ? d.x1! + 6 : d.x0! - 6))
+  .attr("y", (d) => (d.y1! + d.y0!) / 2)
+  // .attr("y", (d) => d.y0! - 10)
+  .attr("dy", "3em")
+  .attr("text-anchor", (d) => (d.x0! < width / 2 ? "start" : "end"))
+  .style("mix-blend-mode", "multiply")
+  .style("font-size", "14px") // Set font size to 16 pixels
+  .style("font-weight", "400")
+  .style("font-family", "Roboto, sans-serif") // Set font family
+  .attr("fill", (d) => color(d.category))
+  .text((d) => `${d.margin}`);

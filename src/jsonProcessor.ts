@@ -7,6 +7,8 @@ export interface SankeyNode {
   x0: number;
   x1: number;
   category: string;
+  change: string;
+  margin: string;
 }
 
 export interface SankeyLink {
@@ -20,10 +22,18 @@ export interface SankeyData {
   links: SankeyLink[];
 }
 class MyNode {
-  constructor(id: string, value: number, valueText: string) {
+  constructor(
+    id: string,
+    value: number,
+    valueText: string,
+    change?: string,
+    margin?: string
+  ) {
     this.id = id;
     this.value = value;
     this.valueText = valueText;
+    this.change = change ? change : "";
+    this.margin = margin ? margin : "";
   }
   id = "";
   value = 0;
@@ -32,6 +42,8 @@ class MyNode {
   x1 = 0;
   x0 = 0;
   category = "";
+  change = "";
+  margin = "";
 }
 class MyLink {
   constructor(source: string, target: string, value: number) {
@@ -76,7 +88,13 @@ export default function JSONProcess(data: any): SankeyData {
             }
           }
           nodes.push(
-            new MyNode(key, temp[key].total.value, temp[key].total.valueText)
+            new MyNode(
+              key,
+              temp[key].total.value,
+              temp[key].total.valueText,
+              temp[key].total.change ? temp[key].total.change : "",
+              temp[key].total.margin ? temp[key].total.margin : ""
+            )
           );
           JSONProcessor(temp[key], key);
         }
@@ -125,7 +143,8 @@ export default function JSONProcess(data: any): SankeyData {
                 new MyNode(
                   element[properties[0]],
                   element[properties[1]],
-                  element[properties[2]]
+                  element[properties[2]],
+                  element[properties[3]] ? element[properties[3]] : ""
                 )
               );
             }
