@@ -7,7 +7,6 @@ import {
   sankeyLinkHorizontal,
   sankeyRight,
 } from "d3-sankey";
-import processJSON from "./jsonjProcessor";
 import JSONProcess, {
   SankeyData,
   SankeyLink,
@@ -88,6 +87,8 @@ const link = svg
   .style("mix-blend-mode", "multiply");
 
 // Creates a gradient, if necessary, for the source-target color option.
+
+//#region GRADIENT CONFIGURATION
 const uid = `O-${Math.random().toString(16).slice(2)}`;
 const gradient = link
   .append("linearGradient")
@@ -111,7 +112,8 @@ gradient
   .attr("offset", "100%")
   //@ts-ignore
   .attr("stop-color", (d) => color(d.target.category));
-console.log("Grad", gradient);
+// console.log("Grad", gradient);
+//#endregion
 
 link
   .append("path")
@@ -134,20 +136,28 @@ svg
   .attr("x", (d) => (d.x0! < width / 2 ? d.x1! + 6 : d.x0! - 6))
   .attr("y", (d) => (d.y1! + d.y0!) / 2)
   // .attr("y", (d) => d.y0! - 10)
-  .attr("dy", "0.35em")
+  .attr("dy", "-0.35em")
   .attr("text-anchor", (d) => (d.x0! < width / 2 ? "start" : "end"))
-  .text((d) => `${d.id} ${d.valueText}`);
-// Optionally, you can customize styles and add interactivity as needed
-// the function for moving the nodes
-// const  dragmove(d:any)=> {
-//   d3.select(this)
-//     .attr("transform",
-//           "translate("
-//              + d.x + ","
-//              + (d.y = Math.max(
-//                 0, Math.min(height - d.dy, d3.event.y))
-//                ) + ")");
-//   sankey.relayout();
-//   link.attr("d", path);
-// }
-// Here you can add additional features like tooltips, interactions, or styling
+  .style("mix-blend-mode", "multiply")
+  .style("font-size", "18px") // Set font size to 16 pixels
+  .style("font-weight", "700")
+  .style("font-family", "Roboto, sans-serif") // Set font family
+  .attr("fill", (d) => color(d.category))
+  .text((d) => `${d.id}`);
+
+svg
+  .append("g")
+  .selectAll()
+  .data(nodes)
+  .join("text")
+  .attr("x", (d) => (d.x0! < width / 2 ? d.x1! + 6 : d.x0! - 6))
+  .attr("y", (d) => (d.y1! + d.y0!) / 2)
+  // .attr("y", (d) => d.y0! - 10)
+  .attr("dy", "1em")
+  .attr("text-anchor", (d) => (d.x0! < width / 2 ? "start" : "end"))
+  .style("mix-blend-mode", "multiply")
+  .style("font-size", "16px") // Set font size to 16 pixels
+  .style("font-weight", "500")
+  .style("font-family", "Roboto, sans-serif") // Set font family
+  .attr("fill", (d) => color(d.category))
+  .text((d) => `${d.valueText}`);
